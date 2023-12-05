@@ -4,12 +4,6 @@ require "pgdump_scrambler"
 require File.expand_path('../spec/dummy/config/environment', __dir__)
 
 RSpec.configure do |config|
-
-  config.before(:suite) do
-    current_dir = Dir.pwd
-    Dir.chdir 'spec/dummy'
-    Dir.chdir current_dir
-  end
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
