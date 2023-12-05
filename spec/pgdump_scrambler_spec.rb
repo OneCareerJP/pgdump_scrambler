@@ -88,7 +88,7 @@ RSpec.describe PgdumpScrambler do
     expect(io.string).to eq expected
   end
 
-  it 'reads file and dump' do
+  it 'dumps' do
     path = File.expand_path('../fixtures/sample.yml',  __FILE__)
     config = PgdumpScrambler::Config.read_file(path)
 
