@@ -51,7 +51,7 @@ module PgdumpScrambler
         database_yaml_file = File.read(Rails.root.join('config', 'database.yml'))
         database_yaml_body = ERB.new(database_yaml_file).result
         # NOTE: Ruby3.1以降ではYAML.loadが廃止されたので、YAML.safe_loadを使う。
-        db_config = if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.1.0')
+        db_config = if YAML.respond_to?(:safe_load)
                       YAML.safe_load(database_yaml_body, aliases: true)
                     else
                       YAML.load(database_yaml_body)
