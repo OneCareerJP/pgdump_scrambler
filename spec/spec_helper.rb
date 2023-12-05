@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "bundler/setup"
 require "pgdump_scrambler"
+require File.expand_path('../spec/dummy/config/environment', __dir__)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
