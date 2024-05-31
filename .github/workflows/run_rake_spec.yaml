@@ -1,12 +1,7 @@
 ---
 name: Ruby
 
-on:
-  push:
-    paths:
-      - "lib/**/*"
-      - "spec/**/*"
-      - ".github/workflows/run_rake_spec.yaml"
+on: [pull_request]
 
 permissions:
   contents: read
@@ -18,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.1', '3.0', '2.7']
+        ruby-version: ['3.3', '3.2', '3.1', '3.0']
 
     steps:
     - uses: actions/checkout@v4
@@ -31,3 +26,5 @@ jobs:
       run: bundle exec bin/setup
     - name: Run tests
       run: bundle exec rake spec
+    - name: rubocop
+      run: bundle exec rubocop

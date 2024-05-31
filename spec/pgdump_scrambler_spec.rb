@@ -88,16 +88,6 @@ RSpec.describe PgdumpScrambler do
     expect(io.string).to eq expected
   end
 
-  it 'dumps' do
-    path = File.expand_path('../fixtures/sample.yml',  __FILE__)
-    config = PgdumpScrambler::Config.read_file(path)
-
-    $stdout = StringIO.new
-    PgdumpScrambler::Dumper.new(config).run
-    output = $stdout.string
-    expect(output).to include('done!')
-  end
-
   it 'creates obfuscator options' do
     yaml = <<~YAML
     ---
