@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{scramble pg_dump columns.}
   spec.homepage      = 'https://github.com/shunichi/pgdump_scrambler'
   spec.license       = "MIT"
+  spec.required_ruby_version = '>= 3.0'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -29,11 +30,4 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-
-  spec.required_ruby_version = "~> 3.1.0"
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rails", "~> 6.1.7.6"
-  spec.add_development_dependency "rubocop"
 end
