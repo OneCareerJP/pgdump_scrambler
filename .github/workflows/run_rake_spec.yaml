@@ -1,12 +1,7 @@
 ---
 name: Ruby
 
-on:
-  push:
-    paths:
-      - "lib/**/*"
-      - "spec/**/*"
-      - ".github/workflows/run_rake_spec.yaml"
+on: [pull_request]
 
 permissions:
   contents: read

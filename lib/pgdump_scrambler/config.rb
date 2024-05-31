@@ -2,6 +2,7 @@
 require 'yaml'
 require 'erb'
 require 'config/table'
+require 'set'
 
 module PgdumpScrambler
   class Config
