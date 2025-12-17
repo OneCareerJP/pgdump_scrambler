@@ -120,6 +120,14 @@ module PgdumpScrambler
           else
             Rails.application.eager_load!
           end
+
+          # 以下のような問題が発生するため、明示的にキャッシュを削除
+          #   migration1: テーブルAにcolumn1を追加
+          #   migration2: テーブルAをメモリキャッシュ(A.Whereなどをmigrationファイルに記述してしまった場合)
+          #   migration3: テーブルAのcolumn1を削除
+          #   ActiveRecord::Base.descendantsで取得されるテーブルAにキャッシュに乗っているcolumn1の情報が含まれてしまう
+          ActiveRecord::Base.descendants.each(&:reset_column_information)
+
           klasses_by_table = ActiveRecord::Base.descendants.to_h { |klass| [klass.table_name, klass] }
           table_names = ActiveRecord::Base.connection.tables.sort - IGNORED_ACTIVE_RECORD_TABLES
           tables = table_names.map do |table_name|
