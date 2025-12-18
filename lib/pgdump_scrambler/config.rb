@@ -126,6 +126,7 @@ module PgdumpScrambler
           #   migration2: テーブルAをメモリキャッシュ(A.Whereなどをmigrationファイルに記述してしまった場合)
           #   migration3: テーブルAのcolumn1を削除
           #   ActiveRecord::Base.descendantsで取得されるテーブルAにキャッシュに乗っているcolumn1の情報が含まれてしまう
+          # 参考: https://onecareer.slack.com/archives/C04B8EGQ4DT/p1765946904698539?thread_ts=1765937049.671739&cid=C04B8EGQ4DT
           ActiveRecord::Base.descendants.each(&:reset_column_information)
 
           klasses_by_table = ActiveRecord::Base.descendants.to_h { |klass| [klass.table_name, klass] }
