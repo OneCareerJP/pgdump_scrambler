@@ -123,9 +123,14 @@ module PgdumpScrambler
 
           # 以下のような問題が発生するため、明示的にキャッシュを削除
           #   migration1: テーブルAにcolumn1を追加
-          #   migration2: テーブルAをメモリキャッシュ(A.Whereなどをmigrationファイルに記述してしまった場合)
+          #   migration2: テーブルAをメモリキャッシュ(A.whereなどをmigrationファイルに記述してしまった場合)
           #   migration3: テーブルAのcolumn1を削除
-          #   ActiveRecord::Base.descendantsで取得されるテーブルAにキャッシュに乗っているcolumn1の情報が含まれてしまう
+          # この場合、後続の処理である klasses_by_table = ActiveRecord::Base.descendants.to_h
+          # で、テーブルAのメモリキャッシュに乗っているcolumn1の情報が取得されてしまう。
+          # そのため、ocのpgdump_scrambler.ymlでcolumn1: nop を削除しても、
+          # RAILS_ENV=test bundle exec rails db:normalize_schema で復活してしまい、 OCのCIが落ちてしまう。
+          # これを防ぐために、カラム情報のキャッシュを削除する。
+          # なお、キャッシュが削除されても、その際はテーブル情報を再度DBから取得するため、キャッシュ削除のリスクは特にない
           # 参考: https://onecareer.slack.com/archives/C04B8EGQ4DT/p1765946904698539?thread_ts=1765937049.671739&cid=C04B8EGQ4DT
           ActiveRecord::Base.descendants.each(&:reset_column_information)
 
